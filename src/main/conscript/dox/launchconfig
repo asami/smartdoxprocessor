@@ -1,0 +1,12 @@
+[app]
+  version: 0.1-SNAPSHOT
+  org: org.smartdox
+  name: smartdoxprocessor
+  class: org.smartdox.processor.AppMain
+[scala]
+  version: 2.9.1
+[repositories]
+  local
+  scala-tools-releases
+  maven-central
+  asamioffice:http://www.asamioffice.com/maven

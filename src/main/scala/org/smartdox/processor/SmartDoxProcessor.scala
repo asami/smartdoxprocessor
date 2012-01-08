@@ -16,17 +16,28 @@ import org.smartdox.processor.services._
 
 /*
  * @since   Jan.  1, 2012
- * @version Jan.  2, 2012
+ * @version Jan.  7, 2012
  * @auther  ASAMI, Tomoharu
  */
 class SmartDox(args: Array[String]) {
-  val goldenport = new Goldenport(args, new SmartDoxDescriptor)
+  lazy val goldenport = new Goldenport(args, new SmartDoxDescriptor)
 
   final def executeShellCommand(args: Array[String]) {
     goldenport.open()
     goldenport.executeShellCommand(args)
     goldenport.close()
   }
+}
+
+class AppMain extends xsbti.AppMain {
+  def run(config: xsbti.AppConfiguration) = {
+    val args = config.arguments
+    val smartdox = new SmartDox(args)
+    smartdox.executeShellCommand(args)
+    new xsbti.Exit {
+      val code = 0
+    }
+  }    
 }
 
 object Main {
@@ -39,8 +50,8 @@ object Main {
 class SmartDoxDescriptor extends GApplicationDescriptor {
   name = "SmartDox"
   version = "0.1"
-  version_build = "20120101"
-  copyright_years = "1998-2011"
+  version_build = "20120107"
+  copyright_years = "1998-2012"
   copyright_owner = "ASAMI, Tomoharu"
   command_name = "sm"
   //
