@@ -4,7 +4,7 @@ organization := "org.smartdox"
 
 name := "smartdoxprocessor"
 
-version := "0.1-SNAPSHOT"
+version := "0.1"
 
 scalaVersion := "2.9.1"
 
@@ -22,26 +22,16 @@ libraryDependencies += "org.goldenport" %% "goldenport" % "0.2.4-SNAPSHOT"
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "1.6.1" % "test"
 
-libraryDependencies += "org.xmlsmartdoc" % "smartdoc" % "2.0-SNAPSHOT"
+libraryDependencies += "org.smartdox" %% "smartdox" % "0.1"
+
+libraryDependencies += "org.xmlsmartdoc" % "smartdoc" % "2.0-alpha"
 
 libraryDependencies += "junit" % "junit" % "4.8" % "test"
 
-// for gp
-
-//libraryDependencies += "org.scala-lang" % "scala-compiler" % "2.9.1"
-
-//libraryDependencies += "javax.servlet" % "servlet-api" % "2.5" % "provided"
-
-//libraryDependencies += "commons-fileupload" % "commons-fileupload" % "1.2.2" % "provided"
-
-//libraryDependencies += "commons-io" % "commons-io" % "1.3.2" % "provided"
-
-//libraryDependencies += "org.apache.poi" % "poi" % "3.8-beta4" % "provided"
-
-//libraryDependencies += "org.apache.poi" % "poi-ooxml" % "3.8-beta4" % "provided"
-
 // onejar
-
 seq(com.github.retronym.SbtOneJar.oneJarSettings: _*)
 
 mainClass in oneJar := Some("org.smartdox.processor.Main")
+
+//
+publishTo := Some(Resolver.file("asamioffice", file("target/maven-repository")))
