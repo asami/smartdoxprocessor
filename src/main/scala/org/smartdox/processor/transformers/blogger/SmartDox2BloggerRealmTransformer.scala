@@ -11,7 +11,7 @@ import org.smartdox.processor.transformers.Dox2DoxTransformer
  * @version Jan. 13, 2012
  * @author  ASAMI, Tomoharu
  */
-class SmartDox2BloggerRealmTransformer(val context: GServiceContext, val dox: SmartDoxEntity
+class SmartDox2BloggerRealmTransformer(val context: GServiceContext, val entity: SmartDoxEntity
     ) extends SmartDoxTransformerBase with Dox2DoxTransformer {
   protected def transform_Dox() {
     
