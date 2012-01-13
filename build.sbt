@@ -18,7 +18,7 @@ resolvers += "Asami Maven Repository" at "http://www.asamioffice.com/maven"
 
 libraryDependencies += "org.scalaz" %% "scalaz-core" % "6.0.3"
 
-libraryDependencies += "org.goldenport" %% "goldenport" % "0.2.4-SNAPSHOT"
+libraryDependencies += "org.goldenport" %% "goldenport" % "0.3.0-SNAPSHOT"
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "1.6.1" % "test"
 
