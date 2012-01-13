@@ -23,3 +23,4 @@ object PlainTextService extends GServiceClass("plain") {
   def new_Service(aCall: GServiceCall): GService =
     new PlainTextService(aCall, this)
 }
+ 

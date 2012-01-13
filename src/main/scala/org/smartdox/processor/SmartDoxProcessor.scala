@@ -49,11 +49,11 @@ object Main {
 
 class SmartDoxDescriptor extends GApplicationDescriptor {
   name = "SmartDox"
-  version = "0.1"
-  version_build = "20120107"
+  version = "0.1.1-SNAPSHOT"
+  version_build = "20120111"
   copyright_years = "1998-2012"
   copyright_owner = "ASAMI, Tomoharu"
-  command_name = "sm"
+  command_name = "dox"
   //
   importers(SmartDoxImporter)
   entities(SmartDoxEntity, SmartDocEntity, XMindEntity)
@@ -61,5 +61,6 @@ class SmartDoxDescriptor extends GApplicationDescriptor {
 	   Html3Service,
 	   LatexService,
 	   PlainTextService,
+	   BloggerService,
 	   Html5Service)
 }

@@ -7,7 +7,7 @@ import org.goldenport.entity.GEntity
 
 /*
  * @since   Jan.  1, 2012
- * @version Jan.  2, 2012
+ * @version Jan. 11, 2012
  * @author  ASAMI, Tomoharu
  */
 class SmartDoxImporter(aCall: GServiceCall) extends GImporter(aCall) {
@@ -36,6 +36,8 @@ object SmartDoxImporter extends GImporterClass {
       case "html5"  => Some(true)
       case "latex"     => Some(true)
       case "plain"    => Some(true)
+      case "pdf"   => Some(true)
+      case "blogger" => Some(true)
       case _         => None
     }
   }
