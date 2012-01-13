@@ -2,6 +2,8 @@ package org.smartdox.processor.entities
 
 import scala.xml.{Node, Elem, Group}
 import java.io.OutputStream
+import scalaz._
+import Scalaz._
 import org.goldenport.entity._
 import org.goldenport.entity.datasource.{GDataSource, NullDataSource, ResourceDataSource}
 import org.goldenport.entity.content.GContent
@@ -10,14 +12,18 @@ import org.goldenport.sdoc.structure._
 import org.goldenport.entities.workspace.TreeWorkspaceEntity
 import org.goldenport.entities.zip.ZipEntity
 import org.goldenport.value.GTreeBase
+import org.smartdox.parser.DoxParser
+import org.smartdox.Dox
 
 /*
  * @since   Jan. 1, 2011
- * @version Jan. 2, 2011
+ * @version Jan. 9, 2011
  * @author  ASAMI, Tomoharu
  */
 class SmartDoxEntity(aIn: GDataSource, aOut: GDataSource, aContext: GEntityContext) extends GEntity(aIn, aOut, aContext) {
   type DataSource_TYPE = GDataSource
+
+  var dox: Option[Dox] = None
 
   val doxContext = new GSubEntityContext(entityContext) {
     override def text_Encoding = Some("UTF-8")
@@ -33,6 +39,11 @@ class SmartDoxEntity(aIn: GDataSource, aOut: GDataSource, aContext: GEntityConte
   }
 
   override protected def open_Entity_Update(aDataSource: GDataSource) {
+    name = aDataSource.simpleName
+    val in = aDataSource.openReader()
+    dox = DoxParser.parseOrgmodeZ(in).fold{ e =>
+      throw new IllegalArgumentException(e.head)
+    }.some
   }
 
   private def load_datasource(aDataSource: GDataSource) {
@@ -45,7 +56,7 @@ class SmartDoxEntity(aIn: GDataSource, aOut: GDataSource, aContext: GEntityConte
 class SmartDoxEntityClass extends GEntityClass {
   type Instance_TYPE = SmartDoxEntity
 
-  override def accept_Suffix(suffix: String): Boolean = suffix == "dox"
+  override def accept_Suffix(suffix: String): Boolean = List("dox", "org").element(suffix)
 
   override def reconstitute_DataSource(aDataSource: GDataSource, aContext: GEntityContext): Option[Instance_TYPE] = Some(new SmartDoxEntity(aDataSource, aContext))
 }

@@ -6,10 +6,10 @@ import org.smartdox.processor.transformers.SmartDoxTransformerBase
 
 /**
  * @since   Jan.  2, 2012
- * @version Jan.  2, 2012
+ * @version Jan.  9, 2012
  * @author  ASAMI, Tomoharu
  */
-class SmartDox2LatexRealmTransformer(val context: GServiceContext, val dox: SmartDoxEntity) extends SmartDoxTransformerBase {
+class SmartDox2LatexRealmTransformer(val context: GServiceContext, val entity: SmartDoxEntity) extends SmartDoxTransformerBase {
   protected def transform_Dox() {
     
   } 
