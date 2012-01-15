@@ -8,7 +8,7 @@ import org.smartdox.processor.transformers.blogger.SmartDox2BloggerRealmTransfor
 
 /**
  * @since   Jan. 11, 2012
- * @version Jan. 13, 2012
+ * @version Jan. 15, 2012
  * @author  ASAMI, Tomoharu
  */
 class BloggerService(aCall: GServiceCall, serviceClass: GServiceClass) extends GService(aCall, serviceClass) {
