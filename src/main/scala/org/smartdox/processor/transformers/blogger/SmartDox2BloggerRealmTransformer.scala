@@ -17,10 +17,17 @@ import org.smartdox._
  */
 class SmartDox2BloggerRealmTransformer(val context: GServiceContext, val entity: SmartDoxEntity
     ) extends SmartDoxTransformerBase with Dox2DoxTransformer {
+  import Dox.TreeDoxV
+
   protected def transform_Dox() {
-    val result = Dox.treeLensV.mod(dox.success, _.map(d => replace(d) {
-      case (b: Body, cs) => (Div, cs)
-    }))
+    def modifyV(d: TreeDoxV) = {
+      val root = d.map(x => find(x)(_.rootLabel.isInstanceOf[Body])).sequence | "No root".failNel
+      root.map(x => replaceShallow(x) {
+        case (b: Body, cs) => (Div, cs)
+      })
+    }
+    
+    val result = Dox.treeLensV.mod(dox.success, modifyV) 
     set_main_contentV("html", result.map(_.toString))
   }
 
