@@ -9,6 +9,8 @@ import org.smartdox.processor.entities.SmartDoxEntity
 import org.smartdox.processor.transformers.SmartDoxTransformerBase
 import org.smartdox.processor.transformers.Dox2DoxTransformer
 import org.smartdox._
+import com.asamioffice.io.UURL
+import com.asamioffice.io.UIO
 
 /**
  * @since   Jan. 11, 2012
@@ -43,11 +45,18 @@ class SmartDox2BloggerRealmTransformer(val context: GServiceContext, val entity:
         val hname = "h" + (s.level + 3)
         (Div, Stream.cons(Dox.html5(hname, s.title) |> Dox.tree, cs))
       }
-      case (p: Program, cs) => (Pre(p.contents, List("name" -> "code", "class" -> "java")), cs)
+      case (p: Program, cs) => (Pre(_program_text(p), List("name" -> "code", "class" -> "java")), cs)
       case (c: Console, cs) => (Pre(c.contents, List("class" -> "console")), cs)
-    }
+    } ensuring { x => println("_transform = " + x.drawTree); true}
   }
 
+  private def _program_text(p: Program): String = {
+    val encoding = p.attribute("encoding") | "utf-8"
+    p.attribute("src") match {
+      case Some(s) => UIO.uri2String(s, encoding)
+      case None => p.contents
+    }
+  }
 /*
   def traverse[T, U](tree: Tree[T],
       enter: PartialFunction[Tree[T], U],
