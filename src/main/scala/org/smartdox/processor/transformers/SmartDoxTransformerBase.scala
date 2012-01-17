@@ -51,9 +51,23 @@ trait SmartDoxTransformerBase extends Recordable {
     }
   }
 
+  protected final def set_main_contentVW(suffix: String, content: ValidationNEL[String, Writer[List[String], String]]) {
+    content match {
+      case Success(c) => {
+        set_main_content(suffix, c.over)
+        set_warning(c.written)
+      }
+      case Failure(e) => set_error_content(suffix, e)
+    }
+  }
+
   protected final def set_error_content(suffix: String, errors: NonEmptyList[String]) {
     errors.foreach(record_warning(_))
     set_main_content(suffix, error_list_dox(errors.list).toString)
+  }
+
+  protected final def set_warning(warns: List[String]) {
+    warns.foreach(record_warning(_))
   }
 
   protected final def name_body = UPathString.getLastComponentBody(entity.name)

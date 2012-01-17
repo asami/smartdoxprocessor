@@ -12,23 +12,38 @@ import org.smartdox._
 
 /**
  * @since   Jan. 11, 2012
- * @version Jan. 15, 2012
+ * @version Jan. 17, 2012
  * @author  ASAMI, Tomoharu
  */
 class SmartDox2BloggerRealmTransformer(val context: GServiceContext, val entity: SmartDoxEntity
     ) extends SmartDoxTransformerBase with Dox2DoxTransformer {
-  import Dox.TreeDoxV
+  import Dox.TreeDoxVW
+  import Dox.TreeDoxW
+  import Dox.DoxVW
 
   protected def transform_Dox() {
-    def modifyV(d: TreeDoxV) = {
-      val root = d.map(x => find(x)(_.rootLabel.isInstanceOf[Body])).sequence | "No root".failNel
-      root.map(x => replaceShallow(x) {
-        case (b: Body, cs) => (Div, cs)
-      })
+    def modifyVW(d: TreeDoxVW): TreeDoxVW = {
+      val root = d.map(_.map(x => find(x)(_.rootLabel.isInstanceOf[Body])))
+      root.flatMap { w =>
+        def trans(t: Tree[Dox]): TreeDoxVW = {
+          _transform(t) |> (writer(nil[String], _).successNel[String])
+        }
+        w.over.fold(trans, "No root".failNel) 
+      }
     }
     
-    val result = Dox.treeLensV.mod(dox.success, modifyV) 
-    set_main_contentV("html", result.map(_.toString))
+    val result = Dox.treeLensVW.mod(dox.toVW, modifyVW) 
+    set_main_contentVW("html", result.map(_.map(_.toString)))
+  }
+
+  private def _transform(t: Tree[Dox]): Tree[Dox] = {
+    replace(t) {
+      case (b: Body, cs) => (Div, cs)
+      case (s: Section, cs) => {
+        val hname = "h" + (s.level + 3)
+        (Div, Stream.cons(Dox.html5(hname, s.title) |> Dox.tree, cs))
+      }
+    }
   }
 
 /*
