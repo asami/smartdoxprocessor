@@ -14,7 +14,7 @@ import com.asamioffice.io.UIO
 
 /**
  * @since   Jan. 11, 2012
- * @version Jan. 17, 2012
+ * @version Jan. 18, 2012
  * @author  ASAMI, Tomoharu
  */
 class SmartDox2BloggerRealmTransformer(val context: GServiceContext, val entity: SmartDoxEntity
@@ -47,6 +47,7 @@ class SmartDox2BloggerRealmTransformer(val context: GServiceContext, val entity:
       }
       case (p: Program, cs) => (Pre(_program_text(p), List("name" -> "code", "class" -> "java")), cs)
       case (c: Console, cs) => (Pre(c.contents, List("class" -> "console")), cs)
+      case (f: Figure, cs) => (Div, Stream(Text("*** embed manually: " + f.img.src + " ***").leaf))
     } ensuring { x => println("_transform = " + x.drawTree); true}
   }
 
