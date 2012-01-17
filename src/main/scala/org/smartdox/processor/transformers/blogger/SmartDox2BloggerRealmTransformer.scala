@@ -43,6 +43,8 @@ class SmartDox2BloggerRealmTransformer(val context: GServiceContext, val entity:
         val hname = "h" + (s.level + 3)
         (Div, Stream.cons(Dox.html5(hname, s.title) |> Dox.tree, cs))
       }
+      case (p: Program, cs) => (Pre(p.contents, List("name" -> "code", "class" -> "java")), cs)
+      case (c: Console, cs) => (Pre(c.contents, List("class" -> "console")), cs)
     }
   }
 

@@ -20,7 +20,7 @@ libraryDependencies += "org.scalaz" %% "scalaz-core" % "6.0.3"
 
 libraryDependencies += "org.goldenport" %% "goldenport" % "0.3.0-SNAPSHOT"
 
-libraryDependencies += "org.goldenport" %% "scalazlib" % "0.1.0-SNAPSHOT"
+libraryDependencies += "org.goldenport" %% "scalazlib" % "0.1.1-SNAPSHOT"
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "1.6.1" % "test"
 
