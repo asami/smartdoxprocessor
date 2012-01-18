@@ -7,12 +7,12 @@ import org.goldenport.entities.workspace.TreeWorkspaceEntity
 import org.smartdox.processor.entities.SmartDoxEntity
 import org.goldenport.entity.content.StringContent
 import org.goldenport.entity.content.StringContent
-
-import com.asamioffice.goldenport.text.UPathString;
-
+import com.asamioffice.goldenport.text.UPathString
 import org.smartdox.parser.DoxParser
 import org.smartdox._
 import org.goldenport.recorder.Recordable
+import Dox.TreeDoxVW
+import com.asamioffice.goldenport.io.UIO
 
 /**
  * @since   Jan.  2, 2012
@@ -85,5 +85,13 @@ trait SmartDoxTransformerBase extends Recordable {
   protected final def error_list_dox(messages: List[String]) = {
     Li(List(Text("ok")))
     Document(Head(), Body(Ul(messages.map(Li(_)))))
+  }
+
+  protected final def program_text(p: Program): String = {
+    val encoding = p.attribute("encoding") | "utf-8"
+    p.attribute("src") match {
+      case Some(s) => UIO.uri2String(s, encoding)
+      case None => p.contents
+    }    
   }
 }
