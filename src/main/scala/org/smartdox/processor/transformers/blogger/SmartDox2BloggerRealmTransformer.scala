@@ -9,8 +9,8 @@ import org.smartdox.processor.entities.SmartDoxEntity
 import org.smartdox.processor.transformers.SmartDoxTransformerBase
 import org.smartdox.processor.transformers.Dox2DoxTransformer
 import org.smartdox._
-import com.asamioffice.io.UURL
-import com.asamioffice.io.UIO
+import com.asamioffice.goldenport.io.UURL
+import com.asamioffice.goldenport.io.UIO
 
 /**
  * @since   Jan. 11, 2012

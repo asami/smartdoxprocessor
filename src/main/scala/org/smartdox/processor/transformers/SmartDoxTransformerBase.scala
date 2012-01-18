@@ -7,7 +7,9 @@ import org.goldenport.entities.workspace.TreeWorkspaceEntity
 import org.smartdox.processor.entities.SmartDoxEntity
 import org.goldenport.entity.content.StringContent
 import org.goldenport.entity.content.StringContent
-import com.asamioffice.text.UPathString
+
+import com.asamioffice.goldenport.text.UPathString;
+
 import org.smartdox.parser.DoxParser
 import org.smartdox._
 import org.goldenport.recorder.Recordable
