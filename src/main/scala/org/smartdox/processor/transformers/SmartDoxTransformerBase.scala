@@ -13,10 +13,11 @@ import org.smartdox._
 import org.goldenport.recorder.Recordable
 import Dox.TreeDoxVW
 import com.asamioffice.goldenport.io.UIO
+import org.goldenport.entity.content.BinaryContent
 
 /**
  * @since   Jan.  2, 2012
- * @version Jan. 15, 2012
+ * @version Jan. 19, 2012
  * @author  ASAMI, Tomoharu
  */
 trait SmartDoxTransformerBase extends Recordable {
@@ -42,7 +43,15 @@ trait SmartDoxTransformerBase extends Recordable {
     target_realm.setContent(path, new StringContent(content, entity_context))
   }
 
+  protected final def set_content(path: String, content: Array[Byte]) {
+    target_realm.setContent(path, new BinaryContent(content, entity_context))
+  }
+
   protected final def set_main_content(suffix: String, content: String) {
+    set_content(name_body + "." + suffix, content)
+  }
+
+  protected final def set_main_content(suffix: String, content: Array[Byte]) {
     set_content(name_body + "." + suffix, content)
   }
 
@@ -92,6 +101,10 @@ trait SmartDoxTransformerBase extends Recordable {
     p.attribute("src") match {
       case Some(s) => UIO.uri2String(s, encoding)
       case None => p.contents
-    }    
+    }
+  }
+
+  protected final def attribute_entry(name: String, value: List[Dox]): (String, String) = {
+    (name, value.foldMap(_.toText()))
   }
 }
