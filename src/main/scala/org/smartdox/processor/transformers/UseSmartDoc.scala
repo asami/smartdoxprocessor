@@ -11,24 +11,46 @@ import org.smartdox._
 import Dox._
 import com.AsamiOffice.jaba2.j2fw.generator.LinkArtifact
 import com.AsamiOffice.jaba2.j2fw.generator.BinaryArtifact
+import com.AsamiOffice.jaba2.j2fw.generator.GeneratorArtifact
+import com.asamioffice.goldenport.io.UURL
 
 /**
  * @since   Jan. 18, 2012
- * @version Jan. 19, 2012
+ * @version Jan. 20, 2012
  * @author  ASAMI, Tomoharu
  */
-trait UseSmartDoc extends Dox2Dox {
+trait UseSmartDoc extends Dox2Dox with GenerateResources {
   val format: String
 
   override protected def transform_Dox() {
     transformed_SdocVW match {
-      case Success(s) => _transform_success(s)
+      case Success(s) => {
+        val os = get_generation_outcomes // MT
+        for (a <- _transform_success(s)) {
+          def isoverwrite = {
+            os.exists(_.uri.toString == a.getName)
+          }
+          if (!isoverwrite) {
+            _set_artifact(a)
+          }
+        }
+        for (o <- os) {
+          o.binary.getFile match {
+            case Some(f) => set_content(f.toString, o.binary.bag.getBytes)
+            case None => sys.error("not implemented yet.")
+          }
+        }
+      }
       case Failure(e) => _transform_failure(e)
     }
   }
 
   protected def transformed_SdocVW: DoxVW = {
     doxVW
+  }
+
+  override protected def aux_DoxVW(tree: TreeDoxVW) = {
+    generate_resourcesVW(tree)
   }
 
   override protected def transform_Dox(t: Tree[Dox]): Tree[Dox] = {
@@ -54,7 +76,7 @@ trait UseSmartDoc extends Dox2Dox {
     } ensuring { x => println("_transform = " + x.drawTree); true}
   }
 
-  private def _transform_success(d: DoxW) {
+  private def _transform_success(d: DoxW) = {
     // XXX warning
     val sdoc = new SmartDocBeans
     sdoc.setFormat(format)
@@ -65,34 +87,35 @@ trait UseSmartDoc extends Dox2Dox {
     val processor = ProcessorFactory.getProcessor()
     val doc = processor.parseDocumentByText(d.over.toString)
     sdoc.setInputDocument(doc)
-    val result = sdoc.getArtifacts()
-    for (r <- result) {
-      r match {
-        case t: TextArtifact if t.getName().startsWith("null.") => {
-          val suffix = UPathString.getSuffix(t.getName)
-          set_main_content(suffix, t.getString())
-        }
-        case t: TextArtifact => set_content(t.getName(), t.getString())
-        case l: LinkArtifact => {
-          val name = UPathString.getLastComponent(l.from_)
-          val suffix = UPathString.getSuffix(l.from_)
-          if (name.startsWith("null.")) {
-            set_main_content(suffix, l.getBytes())
-          } else {
-            set_content(name, l.getBytes())  
-          }
-        }
-        case b: BinaryArtifact => {
-          val name = UPathString.getLastComponent(b.getName());
-          val suffix = UPathString.getSuffix(b.getName());
-          if (name.startsWith("null.")) {
-            set_main_content(suffix, b.getBytes())
-          } else {
-            set_content(name, b.getBytes())  
-          }          
+    sdoc.getArtifacts().toList
+  }
+
+  private def _set_artifact(a: GeneratorArtifact) {
+    a match {
+      case t: TextArtifact if t.getName().startsWith("null.") => {
+        val suffix = UPathString.getSuffix(t.getName)
+        set_main_content(suffix, t.getString())
+      }
+      case t: TextArtifact => set_content(t.getName(), t.getString())
+      case l: LinkArtifact => {
+        val name = UURL.getFileFromFileNameOrURLName(l.from_).toString
+        val suffix = UPathString.getSuffix(l.from_)
+        if (name.startsWith("null.")) {
+          set_main_content(suffix, l.getBytes())
+        } else {
+          set_content(name, l.getBytes())
         }
       }
-    }    
+      case b: BinaryArtifact => {
+        val name = UURL.getFileFromFileNameOrURLName(b.getName()).toString
+        val suffix = UPathString.getSuffix(b.getName());
+        if (name.startsWith("null.")) {
+          set_main_content(suffix, b.getBytes())
+        } else {
+          set_content(name, b.getBytes())
+        }
+      }
+    }
   }
 
   private def _transform_failure(e: NonEmptyList[String]) {

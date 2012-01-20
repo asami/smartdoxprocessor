@@ -10,7 +10,7 @@ import Dox.DoxVW
 
 /**
  * @since   Jan. 11, 2012
- * @version Jan. 18, 2012
+ * @version Jan. 20, 2012
  * @author  ASAMI, Tomoharu
  */
 trait Dox2Dox extends SmartDoxTransformerBase {
@@ -23,7 +23,11 @@ trait Dox2Dox extends SmartDoxTransformerBase {
   }
   
   protected final def dox2doxVW(d: Dox): DoxVW = {
-    Dox.treeLensVW.mod(dox.toVW, modify_doxVW)
+    Dox.treeLensVW.mod(dox.toVW, tdox2_TdoxVW)
+  }
+
+  protected def tdox2_TdoxVW(d: TreeDoxVW): TreeDoxVW = {
+    aux_DoxVW(modify_doxVW(d))
   }
 
   protected final def modify_doxVW(d: TreeDoxVW): TreeDoxVW = {
@@ -35,6 +39,8 @@ trait Dox2Dox extends SmartDoxTransformerBase {
       w.over.fold(trans, "No root".failNel) 
     }
   }
+
+  protected def aux_DoxVW(d: TreeDoxVW): TreeDoxVW = d
 
   protected def find_Root(t:Tree[Dox]): Option[Tree[Dox]] = t.some
 
