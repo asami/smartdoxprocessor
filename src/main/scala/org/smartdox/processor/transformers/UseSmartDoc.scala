@@ -79,7 +79,7 @@ trait UseSmartDoc extends Dox2Dox with GenerateResources {
       case (p: Program, cs) => (SDoc("program", nil, nil), Stream(Text(program_text(p)).leaf))
       case (c: Console, cs) => (SDoc("console", nil, nil), Stream(Text(c.contents).leaf))
       case (f: Figure, cs) => (SDoc("figure", figureattrs(f), nil), Stream.empty)
-    } ensuring { x => println("_transform = " + x.drawTree); true}
+    } // ensuring { x => println("_transform = " + x.drawTree); true}
   }
 
   private def _transform_success(d: DoxW) = {

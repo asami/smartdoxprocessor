@@ -37,6 +37,6 @@ class SmartDox2BloggerRealmTransformer(val context: GServiceContext, val entity:
       case (p: Program, cs) => (Pre(program_text(p), List("name" -> "code", "class" -> "java")), cs)
       case (c: Console, cs) => (Pre(c.contents, List("class" -> "console")), cs)
       case (f: Figure, cs) => (Div, Stream(Text("*** embed manually: " + f.img.src + " ***").leaf))
-    } ensuring { x => println("_transform = " + x.drawTree); true}
+    } // ensuring { x => println("_transform = " + x.drawTree); true}
   }
 }

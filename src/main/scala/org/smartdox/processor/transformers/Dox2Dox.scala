@@ -10,7 +10,7 @@ import Dox.DoxVW
 
 /**
  * @since   Jan. 11, 2012
- * @version Jan. 20, 2012
+ * @version Jan. 21, 2012
  * @author  ASAMI, Tomoharu
  */
 trait Dox2Dox extends SmartDoxTransformerBase {
@@ -34,12 +34,18 @@ trait Dox2Dox extends SmartDoxTransformerBase {
     val root = d.map(_.map(find_Root))
     root.flatMap { w =>
       def trans(t: Tree[Dox]): TreeDoxVW = {
-        transform_Dox(t) |> (writer(nil[String], _).successNel[String])
+        def log(t: Tree[Dox]) = log_treedox("Dox2Dox transfered = ", t)
+        transform_Dox(t) |> log |> (writer(nil[String], _).successNel[String])
       }
       w.over.fold(trans, "No root".failNel) 
     }
   }
 
+  protected final def log_treedox(message: String, t: Tree[Dox]) = {
+    record_debug(message + t.drawTree)
+    t
+  }
+  
   protected def aux_DoxVW(d: TreeDoxVW): TreeDoxVW = d
 
   protected def find_Root(t:Tree[Dox]): Option[Tree[Dox]] = t.some

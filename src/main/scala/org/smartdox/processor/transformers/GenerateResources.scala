@@ -20,7 +20,7 @@ import com.asamioffice.goldenport.io.UIO
 
 /**
  * @since   Jan. 20, 2012
- * @version Jan. 20, 2012
+ * @version Jan. 21, 2012
  * @author  ASAMI, Tomoharu
  */
 trait GenerateResources extends SmartDoxTransformerBase {
@@ -28,7 +28,6 @@ trait GenerateResources extends SmartDoxTransformerBase {
 
   protected final def generate_resourcesVW(tree: TreeDoxVW): TreeDoxVW = {
     for (w <- tree) {
-      println("generated = " + w.over.drawTree)
       val z = w.over.flatten.toList
       w.over.flatten.toList.collect {
         case i: DotImg => generate_graphviz_pngBG(i.contents, i.src.toString) 
@@ -89,20 +88,15 @@ trait GenerateResources extends SmartDoxTransformerBase {
     val cmd = entity_context.executeCommand(command);
     val in = cmd.getInputStream()
     val out = cmd.getOutputStream()
-    //    println("start process = " + dot)
     try {
-//      println("dot(class diagram) = " + text.string)
       out.write(intext.getBytes("utf-8"))
       out.flush
       out.close
-      //      val b = com.asamioffice.io.UIO.stream2Bytes(in)
-      //      println("b size = " + b.length)
       BinaryContent(in, entity_context, outname, mimetype).right
     } catch {
       case e: Exception => e.left
     } finally {
       if (in != null) in.close
-      //      println("finish process = " + dot)
     }
   }  
 
