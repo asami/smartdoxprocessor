@@ -13,31 +13,50 @@ import com.AsamiOffice.jaba2.j2fw.generator.LinkArtifact
 import com.AsamiOffice.jaba2.j2fw.generator.BinaryArtifact
 import com.AsamiOffice.jaba2.j2fw.generator.GeneratorArtifact
 import com.asamioffice.goldenport.io.UURL
+import com.asamioffice.goldenport.io.UFile
 
 /**
  * @since   Jan. 18, 2012
- * @version Jan. 20, 2012
+ * @version Jan. 22, 2012
  * @author  ASAMI, Tomoharu
  */
 trait UseSmartDoc extends Dox2Dox with GenerateResources {
   val format: String
+  val sdocOptions = List("-verbose:false",
+  		                 "-toc:true",
+                       "-html4.titleNumber:true",
+                       "-latex2e.option:a4j",
+                       "-latex2e.package:times",
+                       "-latex2e.driver:dvipdfm",
+                       "-latex2e.box:TascmacLaTeX2eBoxHandler",
+                       "-latex2e.table:ArrayLaTeX2eTableHandler",
+                       "-latex2e.ref:HyperRefLaTeX2eRefHandler",
+                       "-latex2e.program:AllttLaTeX2eProgramHandler",
+                       "-latex2e.console:AllttLaTeX2eConsoleHandler",
+                       "-plain.keisen:jis")
 
   override protected def transform_Dox() {
     transformed_SdocVW match {
       case Success(s) => {
         val os = get_generation_outcomes // MT
+        for (o <- os) { // XXX patch for LaTeX
+          o.binary.getFile match {
+            case Some(f) => UFile.createFile(f, o.getBinary)
+            case None => sys.error("not implemented yet.")
+          }
+        }
+        for (o <- os) {
+          o.binary.getFile match {
+            case Some(f) => set_content(f.toString, o.getBinary())
+            case None => sys.error("not implemented yet.")
+          }
+        }
         for (a <- _transform_success(s)) {
           def isoverwrite = {
             os.exists(_.uri.toString == a.getName)
           }
           if (!isoverwrite) {
             _set_artifact(a)
-          }
-        }
-        for (o <- os) {
-          o.binary.getFile match {
-            case Some(f) => set_content(f.toString, o.binary.bag.getBytes)
-            case None => sys.error("not implemented yet.")
           }
         }
       }
@@ -85,6 +104,7 @@ trait UseSmartDoc extends Dox2Dox with GenerateResources {
   private def _transform_success(d: DoxW) = {
     // XXX warning
     val sdoc = new SmartDocBeans
+    sdoc.setArgs(sdocOptions.toArray)
     sdoc.setFormat(format)
     for (url <- entity.inputDataSource.getUrl()) {
       val dir = UPathString.getContainerPathname(url.toString())

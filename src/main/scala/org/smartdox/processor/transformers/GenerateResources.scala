@@ -20,7 +20,7 @@ import com.asamioffice.goldenport.io.UIO
 
 /**
  * @since   Jan. 20, 2012
- * @version Jan. 21, 2012
+ * @version Jan. 22, 2012
  * @author  ASAMI, Tomoharu
  */
 trait GenerateResources extends SmartDoxTransformerBase {
@@ -60,7 +60,7 @@ trait GenerateResources extends SmartDoxTransformerBase {
   }
 
   protected final def get_generation_outcomes(): List[BinaryContent] = {
-    val os = _outcomes.map(_.get).asScala.toList
+        val os = _outcomes.map(_.get).asScala.toList
     os collect { case Right(b: BinaryContent) => b }
   }
 
@@ -72,8 +72,13 @@ trait GenerateResources extends SmartDoxTransformerBase {
   }
 
   private def _generate_ditaa_png(text: String, outname: String): Either[Exception, BinaryContent] = {
-    _execute_command_tmpfiles("java -jar /opt/local/share/java/ditaa0_9.jar", text,
+    val r = _execute_command_tmpfiles("ditaa", text,
         outname, Strings.mimetype.image_png)
+    if (r.isRight) r
+    else {
+      _execute_command_tmpfiles("java -jar /opt/local/share/java/ditaa0_9.jar", text,
+          outname, Strings.mimetype.image_png)
+    }
   }
 
   private def _generate_sm_csv_png(text: String, outname: String): Either[Exception, BinaryContent] = {
@@ -92,6 +97,7 @@ trait GenerateResources extends SmartDoxTransformerBase {
       out.write(intext.getBytes("utf-8"))
       out.flush
       out.close
+      cmd.waitFor()
       BinaryContent(in, entity_context, outname, mimetype).right
     } catch {
       case e: Exception => e.left
@@ -115,6 +121,8 @@ trait GenerateResources extends SmartDoxTransformerBase {
       val line = "%s %s %s".format(command, infile.toString, outfile.toString)
       val cmd = entity_context.executeCommand(line)
       in = cmd.getInputStream()
+      UIO.stream2Bytes(in) // skip
+      cmd.waitFor()
       val outcome = UIO.file2Bytes(outfile)
       BinaryContent(outcome, entity_context, outname, mimetype).right
     } catch {
