@@ -10,7 +10,7 @@ import Dox.DoxVW
 
 /**
  * @since   Jan. 11, 2012
- * @version Jan. 21, 2012
+ * @version Jan. 23, 2012
  * @author  ASAMI, Tomoharu
  */
 trait Dox2Dox extends SmartDoxTransformerBase {
@@ -42,7 +42,7 @@ trait Dox2Dox extends SmartDoxTransformerBase {
   }
 
   protected final def log_treedox(message: String, t: Tree[Dox]) = {
-    record_debug(message + t.drawTree)
+    record_trace(message + t.drawTree)
     t
   }
   

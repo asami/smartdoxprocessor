@@ -17,7 +17,7 @@ import com.asamioffice.goldenport.io.UFile
 
 /**
  * @since   Jan. 18, 2012
- * @version Jan. 22, 2012
+ * @version Jan. 23, 2012
  * @author  ASAMI, Tomoharu
  */
 trait UseSmartDoc extends Dox2Dox with GenerateResources {
@@ -111,9 +111,14 @@ trait UseSmartDoc extends Dox2Dox with GenerateResources {
       sdoc.setProjectDirectory(dir)
     }
     val processor = ProcessorFactory.getProcessor()
-    val doc = processor.parseDocumentByText(d.over.toString)
-    sdoc.setInputDocument(doc)
-    sdoc.getArtifacts().toList
+    val text = d.over.toString
+    record_trace_block("SmartDoc[" + format + "]") {
+        "(" + sdocOptions.mkString(",") + ") = " + text
+    } {
+      val doc = processor.parseDocumentByText(text)
+      sdoc.setInputDocument(doc)
+      sdoc.getArtifacts().toList
+    }
   }
 
   private def _set_artifact(a: GeneratorArtifact) {
