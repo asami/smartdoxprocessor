@@ -34,6 +34,12 @@ trait UseSmartDoc extends Dox2Dox with GenerateResources {
                        "-latex2e.program:AllttLaTeX2eProgramHandler",
                        "-latex2e.console:AllttLaTeX2eConsoleHandler",
                        "-plain.keisen:jis")
+  private var _id_count = 0
+
+  def _fig_idgen() = {
+    _id_count += 1
+    "idgenfig" + _id_count
+  }
 
   override protected def transform_Dox() {
     transformed_SdocVW match {
@@ -81,7 +87,8 @@ trait UseSmartDoc extends Dox2Dox with GenerateResources {
     def figureattrs(f: Figure): List[(String, String)] = {
       List(attribute_entry("title", f.caption.contents).some,
            ("src" -> f.img.src.toASCIIString).some,
-           f.label.map("label" -> _)).flatten
+           f.label.map("label" -> _),
+           ("id" -> (f.label | _fig_idgen())).some).flatten
     }
     replace(t) {
       case (d: Document, cs) => (SDoc("doc", List("xml:lang" -> "ja"), nil), cs) // XXX language
