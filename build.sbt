@@ -18,7 +18,7 @@ resolvers += "Asami Maven Repository" at "http://www.asamioffice.com/maven"
 
 libraryDependencies += "org.scalaz" %% "scalaz-core" % "6.0.3"
 
-libraryDependencies += "org.goldenport" %% "goldenport" % "0.3.0"
+libraryDependencies += "org.goldenport" %% "goldenport" % "0.3.1-SNAPSHOT"
 
 libraryDependencies += "org.goldenport" %% "scalazlib" % "0.1.1"
 
@@ -27,6 +27,8 @@ libraryDependencies += "org.scalatest" %% "scalatest" % "1.6.1" % "test"
 libraryDependencies += "org.smartdox" %% "smartdox" % "0.2.0"
 
 libraryDependencies += "org.xmlsmartdoc" % "smartdoc" % "2.0-beta"
+
+libraryDependencies += "org.simplemodeling" % "SimpleModeler" % "0.3.1-SNAPSHOT"
 
 libraryDependencies += "junit" % "junit" % "4.8" % "test"
 

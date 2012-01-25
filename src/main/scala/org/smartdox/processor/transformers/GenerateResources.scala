@@ -20,7 +20,7 @@ import com.asamioffice.goldenport.io.UIO
 
 /**
  * @since   Jan. 20, 2012
- * @version Jan. 22, 2012
+ * @version Jan. 24, 2012
  * @author  ASAMI, Tomoharu
  */
 trait GenerateResources extends SmartDoxTransformerBase {
@@ -60,7 +60,7 @@ trait GenerateResources extends SmartDoxTransformerBase {
   }
 
   protected final def get_generation_outcomes(): List[BinaryContent] = {
-        val os = _outcomes.map(_.get).asScala.toList
+    val os = _outcomes.map(_.get).asScala.toList
     os collect { case Right(b: BinaryContent) => b }
   }
 
@@ -82,10 +82,26 @@ trait GenerateResources extends SmartDoxTransformerBase {
   }
 
   private def _generate_sm_csv_png(text: String, outname: String): Either[Exception, BinaryContent] = {
-    val layout = "sm"
-    // val layout = "neato"
-    _execute_command_stdio("sm -diagram".format(layout), text,
-        outname, Strings.mimetype.image_png)
+    import org.simplemodeling.SimpleModeler.SimpleModelerDescriptor
+    import org.goldenport.Goldenport
+    import org.goldenport.exporter.FirstLeafOrZipResultExporterClass   
+
+    val sm = new Goldenport(Array(), SimpleModelerDescriptor)
+    sm.addExporterClass(FirstLeafOrZipResultExporterClass)
+    sm.open()
+    try {
+      val ds = sm.createStringDataSource("model.csv", text)
+      val props = Map("import.builder.policy" -> "none")
+      sm.executeAsAnyRef("diagram", List(ds), props) match {
+        case Some(b: BinaryContent) => {
+          BinaryContent(b.getBinary(), entity_context, outname, b.mimeType | Strings.mimetype.image_png).right
+        }
+        case Some(c) => (new IllegalArgumentException(c.toString)).left // XXX toString too big case
+        case None => (new IllegalArgumentException("empty result")).left
+      }
+    } finally {
+      sm.close()
+    }
   }
 
   private def _execute_command_stdio(command: String, intext: String,
