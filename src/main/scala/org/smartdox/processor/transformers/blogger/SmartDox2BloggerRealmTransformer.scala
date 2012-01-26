@@ -14,7 +14,7 @@ import com.asamioffice.goldenport.io.UIO
 
 /**
  * @since   Jan. 11, 2012
- * @version Jan. 18, 2012
+ * @version Jan. 26, 2012
  * @author  ASAMI, Tomoharu
  */
 class SmartDox2BloggerRealmTransformer(val context: GServiceContext, val entity: SmartDoxEntity
@@ -22,6 +22,8 @@ class SmartDox2BloggerRealmTransformer(val context: GServiceContext, val entity:
   import Dox.TreeDoxVW
   import Dox.TreeDoxW
   import Dox.DoxVW
+
+  override val target_Suffix = "blogger"
 
   override protected def find_Root(t:Tree[Dox]): Option[Tree[Dox]] = {
     find(t)(_.rootLabel.isInstanceOf[Body])

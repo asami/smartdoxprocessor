@@ -10,12 +10,14 @@ import Dox.DoxVW
 
 /**
  * @since   Jan. 11, 2012
- * @version Jan. 23, 2012
+ * @version Jan. 26, 2012
  * @author  ASAMI, Tomoharu
  */
 trait Dox2Dox extends SmartDoxTransformerBase {
+  protected val target_Suffix: String = "html"
+  
   override protected def transform_Dox() {
-    set_main_contentVW("html", doxVW.map(_.map(_.toString)))
+    set_main_contentVW(target_Suffix, doxVW.map(_.map(_.toString)))
   }
 
   protected final def doxVW: DoxVW = {
