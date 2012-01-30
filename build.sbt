@@ -4,7 +4,7 @@ organization := "org.smartdox"
 
 name := "smartdoxprocessor"
 
-version := "0.2.1"
+version := "0.2.2-SNAPSHOT"
 
 scalaVersion := "2.9.1"
 
@@ -24,9 +24,9 @@ libraryDependencies += "org.goldenport" %% "scalazlib" % "0.1.1"
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "1.6.1" % "test"
 
-libraryDependencies += "org.smartdox" %% "smartdox" % "0.2.1"
+libraryDependencies += "org.smartdox" %% "smartdox" % "0.2.2-SNAPSHOT"
 
-libraryDependencies += "org.xmlsmartdoc" % "smartdoc" % "2.0-beta"
+libraryDependencies += "org.xmlsmartdoc" % "smartdoc" % "2.0-beta2"
 
 libraryDependencies += "org.simplemodeling" %% "simplemodeler" % "0.3.1"
 

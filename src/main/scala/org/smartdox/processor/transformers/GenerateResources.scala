@@ -20,11 +20,13 @@ import com.asamioffice.goldenport.io.UIO
 
 /**
  * @since   Jan. 20, 2012
- * @version Jan. 24, 2012
+ * @version Jan. 30, 2012
  * @author  ASAMI, Tomoharu
  */
 trait GenerateResources extends SmartDoxTransformerBase {
   private val _outcomes = new CopyOnWriteArrayList[Promise[Either[Exception, BinaryContent]]]
+
+  private var _is_async = true
 
   protected final def generate_resourcesVW(tree: TreeDoxVW): TreeDoxVW = {
     for (w <- tree) {
@@ -56,6 +58,9 @@ trait GenerateResources extends SmartDoxTransformerBase {
     val p = promise {
       _generate_sm_csv_png(text, outname)
     }
+    if (!_is_async) {
+      p.get
+    }
     _outcomes.add(p)
   }
 
@@ -86,12 +91,14 @@ trait GenerateResources extends SmartDoxTransformerBase {
     import org.goldenport.Goldenport
     import org.goldenport.exporter.FirstLeafOrZipResultExporterClass   
 
+    record_trace("simplemodeler csv = " + text)
     val sm = new Goldenport(Array(), SimpleModelerDescriptor)
     sm.addExporterClass(FirstLeafOrZipResultExporterClass)
     sm.open()
     try {
       val ds = sm.createStringDataSource("model.csv", text)
-      val props = Map("import.builder.policy" -> "none")
+      val props = Map("import.builder.policy" -> "none",
+            "container.message" -> "trace")
       sm.executeAsAnyRef("diagram", List(ds), props) match {
         case Some(b: BinaryContent) => {
           BinaryContent(b.getBinary(), entity_context, outname, b.mimeType | Strings.mimetype.image_png).right
