@@ -97,8 +97,8 @@ trait GenerateResources extends SmartDoxTransformerBase {
     sm.open()
     try {
       val ds = sm.createStringDataSource("model.csv", text)
-      val props = Map("import.builder.policy" -> "none",
-            "container.message" -> "trace")
+      val props = Map("import.builder.policy" -> "none")
+            // "container.message" -> "trace"
       sm.executeAsAnyRef("diagram", List(ds), props) match {
         case Some(b: BinaryContent) => {
           BinaryContent(b.getBinary(), entity_context, outname, b.mimeType | Strings.mimetype.image_png).right
