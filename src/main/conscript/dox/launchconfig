@@ -1,5 +1,5 @@
 [app]
-  version: 0.2.1
+  version: 0.2.2
   org: org.smartdox
   name: smartdoxprocessor
   class: org.smartdox.processor.AppMain
