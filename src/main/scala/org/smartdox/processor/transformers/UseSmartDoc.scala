@@ -17,7 +17,7 @@ import com.asamioffice.goldenport.io.UFile
 
 /**
  * @since   Jan. 18, 2012
- * @version Jan. 23, 2012
+ * @version Mar. 11, 2012
  * @author  ASAMI, Tomoharu
  */
 trait UseSmartDoc extends Dox2Dox with GenerateResources {
@@ -80,9 +80,9 @@ trait UseSmartDoc extends Dox2Dox with GenerateResources {
 
   override protected def transform_Dox(t: Tree[Dox]): Tree[Dox] = {
     def headchildren(h: Head): Stream[Tree[Dox]] = {
-      Stream(SDoc("title", nil, h.title),
-          SDoc("author", nil, h.author),
-          SDoc("date", nil, h.date)) withFilter (_.contents.nonEmpty) map (_.tree)
+      Stream(SmartDoc("title", nil, h.title),
+          SmartDoc("author", nil, h.author),
+          SmartDoc("date", nil, h.date)) withFilter (_.contents.nonEmpty) map (_.tree)
     }
     def figureattrs(f: Figure): List[(String, String)] = {
       List(attribute_entry("title", f.caption.contents).some,
@@ -91,8 +91,8 @@ trait UseSmartDoc extends Dox2Dox with GenerateResources {
            ("id" -> (f.label | _fig_idgen())).some).flatten
     }
     replace(t) {
-      case (d: Document, cs) => (SDoc("doc", List("xml:lang" -> "ja"), nil), cs) // XXX language
-      case (h: Head, cs) => (SDoc("head", nil, nil), headchildren(h))
+      case (d: Document, cs) => (SmartDoc("doc", List("xml:lang" -> "ja"), nil), cs) // XXX language
+      case (h: Head, cs) => (SmartDoc("head", nil, nil), headchildren(h))
       case (s: Section, cs) => {
         val sname = s.level match {
           case 1 => "section"
@@ -100,11 +100,11 @@ trait UseSmartDoc extends Dox2Dox with GenerateResources {
           case 3 => "subsubsection"
           case _ => "div"
         }
-        (SDoc(sname, List(attribute_entry("title", s.title)), nil), cs)
+        (SmartDoc(sname, List(attribute_entry("title", s.title)), nil), cs)
       }
-      case (p: Program, cs) => (SDoc("program", nil, nil), Stream(Text(program_text(p)).leaf))
-      case (c: Console, cs) => (SDoc("console", nil, nil), Stream(Text(c.contents).leaf))
-      case (f: Figure, cs) => (SDoc("figure", figureattrs(f), nil), Stream.empty)
+      case (p: Program, cs) => (SmartDoc("program", nil, nil), Stream(Text(program_text(p)).leaf))
+      case (c: Console, cs) => (SmartDoc("console", nil, nil), Stream(Text(c.contents).leaf))
+      case (f: Figure, cs) => (SmartDoc("figure", figureattrs(f), nil), Stream.empty)
     } // ensuring { x => println("_transform = " + x.drawTree); true}
   }
 

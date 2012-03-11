@@ -49,8 +49,8 @@ object Main {
 
 class SmartDoxDescriptor extends GApplicationDescriptor {
   name = "SmartDox"
-  version = "0.2.2"
-  version_build = "20120212"
+  version = "0.2.3-SNAPSHOT"
+  version_build = "20120311"
   copyright_years = "1998-2012"
   copyright_owner = "ASAMI, Tomoharu"
   command_name = "dox"
