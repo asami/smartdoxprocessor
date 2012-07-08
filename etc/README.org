@@ -1,0 +1,6 @@
+* Dependencies
+
+- smartdox 0.3.0-SNAPSHOT
+- goldenport 0.4.0-SNAPSHOT
+- simplemodeler 0.4.0-SNAPSHOT
+- smartdoxprocessor 0.3.0-SNAPSHOT

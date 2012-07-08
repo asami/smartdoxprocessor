@@ -4,9 +4,11 @@ organization := "org.smartdox"
 
 name := "smartdoxprocessor"
 
-version := "0.2.3"
+version := "0.3.0-SNAPSHOT"
 
 scalaVersion := "2.9.1"
+
+// crossScalaVersions := Seq("2.9.1", "2.9.2")
 
 scalacOptions += "-deprecation"
 
@@ -16,26 +18,26 @@ scalacOptions += "-unchecked"
 
 resolvers += "Asami Maven Repository" at "http://www.asamioffice.com/maven"
 
-libraryDependencies += "org.scalaz" %% "scalaz-core" % "6.0.3"
+libraryDependencies += "org.scalaz" %% "scalaz-core" % "6.0.4"
 
-libraryDependencies += "org.goldenport" %% "goldenport" % "0.3.1"
+libraryDependencies += "org.goldenport" %% "goldenport" % "0.4.0-SNAPSHOT"
 
 libraryDependencies += "org.goldenport" %% "scalazlib" % "0.1.1"
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "1.6.1" % "test"
 
-libraryDependencies += "org.smartdox" %% "smartdox" % "0.2.5"
+libraryDependencies += "org.smartdox" %% "smartdox" % "0.3.0-SNAPSHOT"
 
 libraryDependencies += "org.xmlsmartdoc" % "smartdoc" % "2.0-beta2"
 
-libraryDependencies += "org.simplemodeling" %% "simplemodeler" % "0.3.3"
+libraryDependencies += "org.simplemodeling" %% "simplemodeler" % "0.4.0-SNAPSHOT"
 
 libraryDependencies += "junit" % "junit" % "4.8" % "test"
 
 // onejar
-seq(com.github.retronym.SbtOneJar.oneJarSettings: _*)
+// seq(com.github.retronym.SbtOneJar.oneJarSettings: _*)
 
-mainClass in oneJar := Some("org.smartdox.processor.Main")
+// mainClass in oneJar := Some("org.smartdox.processor.Main")
 
 //
 publishTo := Some(Resolver.file("asamioffice", file("target/maven-repository")))
