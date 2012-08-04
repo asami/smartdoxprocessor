@@ -1,0 +1,5 @@
+#+title: Test
+
+Test Excel XML sample.
+
+#+table: "/tmp/goldenport.d/read/excelx.xlsx"

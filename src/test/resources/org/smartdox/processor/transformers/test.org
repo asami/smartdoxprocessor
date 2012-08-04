@@ -1,0 +1,7 @@
+#+title: Test
+
+Test sample.
+
+#+table: "/tmp/goldenport.d/read/test.csv"
+
+|A|B|C|

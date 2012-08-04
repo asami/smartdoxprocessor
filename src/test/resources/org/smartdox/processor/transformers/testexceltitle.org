@@ -1,0 +1,5 @@
+#+title: Test
+
+Test sample.
+
+#+table: "/tmp/goldenport.d/read/excel.xls" format:title
