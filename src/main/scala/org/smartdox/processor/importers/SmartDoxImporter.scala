@@ -7,15 +7,16 @@ import org.goldenport.entity.GEntity
 
 /*
  * @since   Jan.  1, 2012
- * @version Jan. 11, 2012
+ *  version Jan. 11, 2012
+ * @version Jul. 14, 2012
  * @author  ASAMI, Tomoharu
  */
 class SmartDoxImporter(aCall: GServiceCall) extends GImporter(aCall) {
-  val packageNames: Seq[String] = request.parameter("source.package") match {
-    case Some(name) => name.asInstanceOf[AnyRef].toString.split(":").map(_.trim)
-    case None       => Nil
-  }
-  val packageName = if (packageNames.isEmpty) "" else packageNames.head
+//  val packageNames: Seq[String] = request.parameter("source.package") match {
+//    case Some(name) => name.asInstanceOf[AnyRef].toString.split(":").map(_.trim)
+//    case None       => Nil
+//  }
+//  val packageName = if (packageNames.isEmpty) "" else packageNames.head
 
   override def execute_Import() {
     val args = request.arguments.map(reconstitute_entity)

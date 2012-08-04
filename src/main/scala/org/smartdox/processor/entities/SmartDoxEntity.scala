@@ -15,15 +15,16 @@ import org.goldenport.value.GTreeBase
 import org.smartdox.parser.DoxParser
 import org.smartdox.Dox
 
-/*
- * @since   Jan. 1, 2011
- * @version Jan. 9, 2011
+/**
+ * @since   Jan.  1, 2012
+ *  version Jan.  9, 2012
+ * @version Aug.  5, 2012
  * @author  ASAMI, Tomoharu
  */
 class SmartDoxEntity(aIn: GDataSource, aOut: GDataSource, aContext: GEntityContext) extends GEntity(aIn, aOut, aContext) {
   type DataSource_TYPE = GDataSource
 
-  var dox: Option[Dox] = None
+  var dox: Either[NonEmptyList[String], Dox] = Left(m("文書が設定されていません。").wrapNel)
 
   val doxContext = new GSubEntityContext(entityContext) {
     override def text_Encoding = Some("UTF-8")
@@ -41,9 +42,7 @@ class SmartDoxEntity(aIn: GDataSource, aOut: GDataSource, aContext: GEntityConte
   override protected def open_Entity_Update(aDataSource: GDataSource) {
     name = aDataSource.simpleName
     val in = aDataSource.openReader()
-    dox = DoxParser.parseOrgmodeZ(in).fold{ e =>
-      throw new IllegalArgumentException(e.head)
-    }.some
+    dox = DoxParser.parseOrgmodeZ(in).either
   }
 
   private def load_datasource(aDataSource: GDataSource) {

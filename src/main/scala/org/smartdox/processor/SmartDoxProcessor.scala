@@ -6,6 +6,7 @@ import org.goldenport.service._
 import org.goldenport.entity._
 import org.goldenport.entities.csv._
 import org.goldenport.entities.xmind._
+import org.goldenport.entities.excel._
 import content.BinaryContent
 import org.goldenport.exporter.FirstLeafResultExporterClass
 import org.smartdox.processor.entities.SmartDoxEntity
@@ -16,7 +17,7 @@ import org.smartdox.processor.services._
 
 /*
  * @since   Jan.  1, 2012
- * @version Jun.  9, 2012
+ * @version Jul. 21, 2012
  * @auther  ASAMI, Tomoharu
  */
 class SmartDox(args: Array[String]) {
@@ -49,14 +50,15 @@ object Main {
 
 class SmartDoxDescriptor extends GApplicationDescriptor {
   name = "SmartDox"
-  version = "0.2.3"
-  version_build = "20120609"
+  version = "0.3.0-SNAPSHOT"
+  version_build = "20120720"
   copyright_years = "1998-2012"
   copyright_owner = "ASAMI, Tomoharu"
   command_name = "dox"
   //
   importers(SmartDoxImporter)
-  entities(SmartDoxEntity, SmartDocEntity, XMindEntity)
+  entities(SmartDoxEntity, SmartDocEntity, XMindEntity, CsvEntity,
+           ExcelBookEntity, ExcelxBookEntity)
   services(Html4Service,
 	   Html3Service,
 	   LatexService,

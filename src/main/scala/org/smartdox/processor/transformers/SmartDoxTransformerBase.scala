@@ -17,7 +17,8 @@ import org.goldenport.entity.content.BinaryContent
 
 /**
  * @since   Jan.  2, 2012
- * @version Jan. 19, 2012
+ *  version Jan. 19, 2012
+ * @version Aug.  5, 2012
  * @author  ASAMI, Tomoharu
  */
 trait SmartDoxTransformerBase extends Recordable {
@@ -84,7 +85,7 @@ trait SmartDoxTransformerBase extends Recordable {
   protected final def name_body = UPathString.getLastComponentBody(entity.name)
 
   protected final def dox = {
-    entity.dox | error_dox
+    entity.dox.fold(x => error_list_dox(x.list), identity)
   }
 
   protected final def error_dox = {

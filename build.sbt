@@ -24,7 +24,9 @@ libraryDependencies += "org.goldenport" %% "goldenport" % "0.4.0-SNAPSHOT"
 
 libraryDependencies += "org.goldenport" %% "scalazlib" % "0.1.1"
 
-libraryDependencies += "org.scalatest" %% "scalatest" % "1.6.1" % "test"
+libraryDependencies += "org.apache.poi" % "poi" % "3.8"
+
+libraryDependencies += "org.apache.poi" % "poi-ooxml" % "3.8"
 
 libraryDependencies += "org.smartdox" %% "smartdox" % "0.3.0-SNAPSHOT"
 
@@ -32,7 +34,11 @@ libraryDependencies += "org.xmlsmartdoc" % "smartdoc" % "2.0-beta2"
 
 libraryDependencies += "org.simplemodeling" %% "simplemodeler" % "0.4.0-SNAPSHOT"
 
+libraryDependencies += "org.scalatest" %% "scalatest" % "1.6.1" % "test"
+
 libraryDependencies += "junit" % "junit" % "4.8" % "test"
+
+libraryDependencies += "org.goldenport" %% "goldenport-scalatest-lib" % "0.2.0" % "test"
 
 // onejar
 // seq(com.github.retronym.SbtOneJar.oneJarSettings: _*)
