@@ -17,7 +17,7 @@ import org.smartdox.processor.services._
 
 /*
  * @since   Jan.  1, 2012
- * @version Jul. 21, 2012
+ * @version Aug.  5, 2012
  * @auther  ASAMI, Tomoharu
  */
 class SmartDox(args: Array[String]) {
@@ -51,7 +51,7 @@ object Main {
 class SmartDoxDescriptor extends GApplicationDescriptor {
   name = "SmartDox"
   version = "0.3.0-SNAPSHOT"
-  version_build = "20120720"
+  version_build = "20120805"
   copyright_years = "1998-2012"
   copyright_owner = "ASAMI, Tomoharu"
   command_name = "dox"

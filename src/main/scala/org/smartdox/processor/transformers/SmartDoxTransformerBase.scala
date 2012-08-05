@@ -85,7 +85,7 @@ trait SmartDoxTransformerBase extends Recordable {
   protected final def name_body = UPathString.getLastComponentBody(entity.name)
 
   protected final def dox = {
-    entity.dox.fold(x => error_list_dox(x.list), identity)
+    entity.dox ||| (x => error_list_dox(x.list))
   }
 
   protected final def error_dox = {

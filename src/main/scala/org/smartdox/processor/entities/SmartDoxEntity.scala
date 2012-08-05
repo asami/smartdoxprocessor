@@ -24,7 +24,7 @@ import org.smartdox.Dox
 class SmartDoxEntity(aIn: GDataSource, aOut: GDataSource, aContext: GEntityContext) extends GEntity(aIn, aOut, aContext) {
   type DataSource_TYPE = GDataSource
 
-  var dox: Either[NonEmptyList[String], Dox] = Left(m("文書が設定されていません。").wrapNel)
+  var dox: ValidationNEL[String, Dox] = m("文書が設定されていません。").failNel
 
   val doxContext = new GSubEntityContext(entityContext) {
     override def text_Encoding = Some("UTF-8")
@@ -42,7 +42,7 @@ class SmartDoxEntity(aIn: GDataSource, aOut: GDataSource, aContext: GEntityConte
   override protected def open_Entity_Update(aDataSource: GDataSource) {
     name = aDataSource.simpleName
     val in = aDataSource.openReader()
-    dox = DoxParser.parseOrgmodeZ(in).either
+    dox = DoxParser.parseOrgmodeZ(in)
   }
 
   private def load_datasource(aDataSource: GDataSource) {

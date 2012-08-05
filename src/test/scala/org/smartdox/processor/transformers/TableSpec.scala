@@ -11,7 +11,7 @@ import org.smartdox.processor.SmartDox
 
 /*
  * @since   Jul. 11, 2012
- * @version Aug.  4, 2012
+ * @version Aug.  5, 2012
  * @author  ASAMI, Tomoharu
  */
 @RunWith(classOf[JUnitRunner])
@@ -39,9 +39,9 @@ class TableSpec extends WordSpec with ShouldMatchers with ScalazMatchers {
         val doxp = new SmartDox(args)
         doxp.executeShellCommand(args)
       }
-      "Excelx title" in {
+      "Excel title" in {
 //        val args = Array[String]("-blogger", "resource:/org/smartdox.processor.transformers/test.csv", "-output:" + TestCreateDir)
-        val args = Array[String]("-blogger", TestReadDir + "testexcelxtitle.org", "-output:" + TestCreateDir, "-container.log:trace")
+        val args = Array[String]("-blogger", TestReadDir + "testexceltitle.org", "-output:" + TestCreateDir, "-container.log:trace")
         val doxp = new SmartDox(args)
         doxp.executeShellCommand(args)
       }
