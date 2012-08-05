@@ -16,8 +16,8 @@ import org.smartdox.processor.SmartDox
  */
 @RunWith(classOf[JUnitRunner])
 class TableSpec extends WordSpec with ShouldMatchers with ScalazMatchers {
-  val TestReadDir = "/tmp/goldenport.d/read/"
-  val TestCreateDir = "/tmp/goldenport.d/create/smartdox/"
+  val TestReadDir = "/tmp/smartdox.d/read/"
+  val TestCreateDir = "/tmp/smartdox.d/create/"
 
   "Table" should {
     "Table" that {

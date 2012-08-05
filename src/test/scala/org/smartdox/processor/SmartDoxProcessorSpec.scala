@@ -15,8 +15,8 @@ import org.goldenport.scalatest.ScalazMatchers
  */
 @RunWith(classOf[JUnitRunner])
 class SmartDoxProcessorSpec extends WordSpec with ShouldMatchers with ScalazMatchers {
-  val TestReadDir = "/tmp/goldenport.d/read/"
-  val TestCreateDir = "/tmp/goldenport.d/create/smartdox/"
+  val TestReadDir = "/tmp/smartdox.d/read/"
+  val TestCreateDir = "/tmp/smartdox.d/create/"
 
   "SmartDoxProcessor" should {
     "execution" that {
