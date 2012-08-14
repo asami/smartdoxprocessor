@@ -37,15 +37,17 @@ class SmartDoxEntity(aIn: GDataSource, aOut: GDataSource, aContext: GEntityConte
   }
 
   override protected def open_Entity_Create(aDataSource: GDataSource) {
+    load_datasource(aDataSource)
   }
 
   override protected def open_Entity_Update(aDataSource: GDataSource) {
-    name = aDataSource.simpleName
-    val in = aDataSource.openReader()
-    dox = DoxParser.parseOrgmodeZ(in)
+    load_datasource(aDataSource)
   }
 
   private def load_datasource(aDataSource: GDataSource) {
+    name = aDataSource.simpleName
+    val in = aDataSource.openReader()
+    dox = DoxParser.parseOrgmodeZ(in)
   }    
 
   override protected def write_Content(anOut: OutputStream): Unit = {

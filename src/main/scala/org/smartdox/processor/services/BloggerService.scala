@@ -2,13 +2,15 @@ package org.smartdox.processor.services
 
 import org.goldenport.service._
 import org.goldenport.entity._
+import org.goldenport.record._
 import org.smartdox.processor.entities.SmartDoxEntity
 import org.smartdox.processor.transformers.html5.SmartDox2Html5RealmTransformer
 import org.smartdox.processor.transformers.blogger.SmartDox2BloggerRealmTransformer
 
 /**
  * @since   Jan. 11, 2012
- * @version Jan. 15, 2012
+ *  version Jan. 15, 2012
+ * @version Aug. 15, 2012
  * @author  ASAMI, Tomoharu
  */
 class BloggerService(aCall: GServiceCall, serviceClass: GServiceClass) extends GService(aCall, serviceClass) {
@@ -21,6 +23,10 @@ class BloggerService(aCall: GServiceCall, serviceClass: GServiceClass) extends G
 }
 
 object BloggerService extends GServiceClass("blogger") {
+  description.title = "Produces Blogger document."
+  contract = Schema(
+    Parameter(XFile))
+
   def new_Service(aCall: GServiceCall): GService =
     new BloggerService(aCall, this)
 }

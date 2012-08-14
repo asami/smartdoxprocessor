@@ -28,3 +28,9 @@ class SmartDoxProcessorSpec extends WordSpec with ShouldMatchers with ScalazMatc
     }
   }
 }
+
+object SmartDoxProcessorSpec {
+  def main(args: Array[String]) {
+    org.scalatest.run(new SmartDoxProcessorSpec)
+  }
+}
