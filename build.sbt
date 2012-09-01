@@ -6,9 +6,9 @@ name := "smartdoxprocessor"
 
 version := "0.3.0-SNAPSHOT"
 
-scalaVersion := "2.9.1"
+// scalaVersion := "2.9.2"
 
-// crossScalaVersions := Seq("2.9.1", "2.9.2")
+crossScalaVersions := Seq("2.9.2", "2.9.1")
 
 scalacOptions += "-deprecation"
 
@@ -22,7 +22,7 @@ libraryDependencies += "org.scalaz" %% "scalaz-core" % "6.0.4"
 
 libraryDependencies += "org.goldenport" %% "goldenport" % "0.4.0-SNAPSHOT"
 
-libraryDependencies += "org.goldenport" %% "scalazlib" % "0.1.1"
+libraryDependencies += "org.goldenport" %% "goldenport-scalaz-lib" % "0.2.0"
 
 libraryDependencies += "org.apache.poi" % "poi" % "3.8"
 
