@@ -18,13 +18,14 @@ import org.goldenport.entity.content.BinaryContent
 /**
  * @since   Jan.  2, 2012
  *  version Jan. 19, 2012
- * @version Aug.  5, 2012
+ * @version Aug. 25, 2012
  * @author  ASAMI, Tomoharu
  */
 trait SmartDoxTransformerBase extends Recordable {
   protected val entity: SmartDoxEntity
   protected val context: GServiceContext
 
+  protected val base_Uri = entity.getBaseUriAsString
   protected val entity_context = entity.entityContext
   protected val target_realm = new TreeWorkspaceEntity(entity_context)
 

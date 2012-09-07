@@ -11,7 +11,7 @@ import org.smartdox.processor.SmartDox
 
 /*
  * @since   Jul. 11, 2012
- * @version Aug.  5, 2012
+ * @version Sep.  8, 2012
  * @author  ASAMI, Tomoharu
  */
 @RunWith(classOf[JUnitRunner])
@@ -19,6 +19,8 @@ class TableSpec extends WordSpec with ShouldMatchers with ScalazMatchers {
   val TestReadDir = "/tmp/smartdox.d/read/"
   val TestCreateDir = "/tmp/smartdox.d/create/"
 
+  new java.io.File(TestReadDir).mkdirs
+  
   "Table" should {
     "Table" that {
       "CSV" in {
@@ -34,14 +36,14 @@ class TableSpec extends WordSpec with ShouldMatchers with ScalazMatchers {
         doxp.executeShellCommand(args)
       }
       "Excelx" in {
-//        val args = Array[String]("-blogger", "resource:/org/smartdox.processor.transformers/test.csv", "-output:" + TestCreateDir)
-        val args = Array[String]("-blogger", TestReadDir + "testexcelx.org", "-output:" + TestCreateDir, "-container.log:trace")
+        val args = Array[String]("-blogger", "resource:/org/smartdox/processor/transformers/testexcelx.org", "-output:" + TestCreateDir)
+//        val args = Array[String]("-blogger", TestReadDir + "testexcelx.org", "-output:" + TestCreateDir, "-container.log:trace")
         val doxp = new SmartDox(args)
         doxp.executeShellCommand(args)
       }
       "Excel title" in {
-//        val args = Array[String]("-blogger", "resource:/org/smartdox.processor.transformers/test.csv", "-output:" + TestCreateDir)
-        val args = Array[String]("-blogger", TestReadDir + "testexceltitle.org", "-output:" + TestCreateDir, "-container.log:trace")
+        val args = Array[String]("-blogger", "resource:/org/smartdox/processor/transformers/testexceltitle.org", "-output:" + TestCreateDir)
+//        val args = Array[String]("-blogger", TestReadDir + "testexceltitle.org", "-output:" + TestCreateDir, "-container.log:trace")
         val doxp = new SmartDox(args)
         doxp.executeShellCommand(args)
       }

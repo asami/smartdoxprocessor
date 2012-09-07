@@ -2,6 +2,6 @@
 
 Test sample.
 
-#+table: "/tmp/goldenport.d/read/test.csv"
+#+table: "test.csv"
 
 |A|B|C|

@@ -1,5 +1,6 @@
 package org.smartdox.processor.transformers;
 
+import com.asamioffice.goldenport.text.UPathString
 import scalaz._
 import Scalaz._
 import org.goldenport.Z._
@@ -14,10 +15,11 @@ import org.goldenport.value.GTable
  * @since   Jan. 11, 2012
  *  version Jan. 26, 2012
  *  version Jul. 21, 2012
- * @version Aug.  4, 2012
+ * @version Aug. 25, 2012
  * @author  ASAMI, Tomoharu
  */
 trait Dox2Dox extends SmartDoxTransformerBase {
+  protected val base_Uri: Option[String]
   protected val target_Suffix: String = "html"
   
   override protected def transform_Dox() {
@@ -76,7 +78,11 @@ trait Dox2Dox extends SmartDoxTransformerBase {
   }
 
   protected final def load_table(tt: TTable): (Option[THead], TBody) = {
-    context.entitySpace.reconstitute(tt.uri) match {
+    val uri = base_Uri match {
+      case Some(s) => UPathString.concatPathname(s, tt.uri)
+      case None => tt.uri
+    }
+    context.entitySpace.reconstitute(uri) match {
       case Some(e) => load_table_entity(e)
       case None => {
         record_warning("%s not found in table.".format(tt.uri))

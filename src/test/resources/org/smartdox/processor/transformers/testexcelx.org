@@ -2,4 +2,4 @@
 
 Test Excel XML sample.
 
-#+table: "/tmp/goldenport.d/read/excelx.xlsx"
+#+table: "excelx.xlsx"
