@@ -7,18 +7,19 @@ import org.goldenport.service.GServiceContext
 import org.goldenport.entities.workspace.TreeWorkspaceEntity
 import org.smartdox.processor.entities.SmartDoxEntity
 import org.smartdox.processor.transformers.SmartDoxTransformerBase
-import org.smartdox.processor.transformers.Dox2Dox
+import org.smartdox.processor.transformers.Dox2DoxSmartDoxTransformerBase
 import org.smartdox._
 import com.asamioffice.goldenport.io.UURL
 import com.asamioffice.goldenport.io.UIO
 
 /**
  * @since   Jan. 11, 2012
- * @version Jan. 26, 2012
+ *  version Jan. 26, 2012
+ * @version Sep.  8, 2012
  * @author  ASAMI, Tomoharu
  */
 class SmartDox2BloggerRealmTransformer(val context: GServiceContext, val entity: SmartDoxEntity
-    ) extends SmartDoxTransformerBase with Dox2Dox {
+    ) extends Dox2DoxSmartDoxTransformerBase {
   import Dox.TreeDoxVW
   import Dox.TreeDoxW
   import Dox.DoxVW

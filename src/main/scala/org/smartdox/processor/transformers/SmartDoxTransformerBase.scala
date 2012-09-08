@@ -18,7 +18,8 @@ import org.goldenport.entity.content.BinaryContent
 /**
  * @since   Jan.  2, 2012
  *  version Jan. 19, 2012
- * @version Aug. 25, 2012
+ *  version Aug. 25, 2012
+ * @version Sep.  8, 2012
  * @author  ASAMI, Tomoharu
  */
 trait SmartDoxTransformerBase extends Recordable {

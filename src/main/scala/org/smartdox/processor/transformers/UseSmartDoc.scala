@@ -17,10 +17,11 @@ import com.asamioffice.goldenport.io.UFile
 
 /**
  * @since   Jan. 18, 2012
- * @version Mar. 11, 2012
+ *  version Mar. 11, 2012
+ * @version Sep.  8, 2012
  * @author  ASAMI, Tomoharu
  */
-trait UseSmartDoc extends Dox2Dox with GenerateResources {
+trait UseSmartDoc extends Dox2DoxSmartDoxTransformerBase with GenerateResources {
   val format: String
   val sdocOptions = List("-verbose:false",
   		                 "-toc:true",

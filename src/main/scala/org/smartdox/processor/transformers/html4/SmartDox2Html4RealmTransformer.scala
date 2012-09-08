@@ -15,12 +15,12 @@ import com.AsamiOffice.jaba2.j2fw.generator.TextArtifact
 import org.smartdox.processor.transformers.UseSmartDoc
 import org.smartdox._
 import org.goldenport.Z._
-import org.smartdox.processor.transformers.Dox2Dox
 import Dox.DoxVW
 
 /**
  * @since   Jan.  2, 2012
- * @version Jan. 19, 2012
+ *  version Jan. 19, 2012
+ * @version Sep.  8, 2012
  * @author  ASAMI, Tomoharu
  */
 class SmartDox2Html4RealmTransformer(val context: GServiceContext, val entity: SmartDoxEntity
