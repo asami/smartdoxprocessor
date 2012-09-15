@@ -1,10 +1,10 @@
 [app]
-  version: 0.2.3
+  version: 0.3.0-RC
   org: org.smartdox
   name: smartdoxprocessor
   class: org.smartdox.processor.AppMain
 [scala]
-  version: 2.9.1
+  version: 2.9.2
 [repositories]
   local
   scala-tools-releases

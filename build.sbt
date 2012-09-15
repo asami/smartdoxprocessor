@@ -4,11 +4,11 @@ organization := "org.smartdox"
 
 name := "smartdoxprocessor"
 
-version := "0.3.0-SNAPSHOT"
+version := "0.3.0-RC"
 
-// scalaVersion := "2.9.2"
+scalaVersion := "2.9.2"
 
-crossScalaVersions := Seq("2.9.2", "2.9.1")
+// crossScalaVersions := Seq("2.9.2", "2.9.1")
 
 scalacOptions += "-deprecation"
 
@@ -20,7 +20,7 @@ resolvers += "Asami Maven Repository" at "http://www.asamioffice.com/maven"
 
 libraryDependencies += "org.scalaz" %% "scalaz-core" % "6.0.4"
 
-libraryDependencies += "org.goldenport" %% "goldenport" % "0.4.0-SNAPSHOT"
+libraryDependencies += "org.goldenport" %% "goldenport" % "0.4.0"
 
 libraryDependencies += "org.goldenport" %% "goldenport-scalaz-lib" % "0.2.0"
 
@@ -28,11 +28,11 @@ libraryDependencies += "org.apache.poi" % "poi" % "3.8"
 
 libraryDependencies += "org.apache.poi" % "poi-ooxml" % "3.8"
 
-libraryDependencies += "org.smartdox" %% "smartdox" % "0.3.0-SNAPSHOT"
+libraryDependencies += "org.smartdox" %% "smartdox" % "0.3.0"
 
 libraryDependencies += "org.xmlsmartdoc" % "smartdoc" % "2.0-beta2"
 
-libraryDependencies += "org.simplemodeling" %% "simplemodeler" % "0.4.0-SNAPSHOT"
+libraryDependencies += "org.simplemodeling" %% "simplemodeler" % "0.4.0-RC"
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "1.6.1" % "test"
 

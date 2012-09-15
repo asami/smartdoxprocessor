@@ -4,7 +4,7 @@
   name: smartdoxprocessor
   class: org.smartdox.processor.SmartDocApp
 [scala]
-  version: 2.9.1
+  version: 2.9.2
 [repositories]
   local
   scala-tools-releases
