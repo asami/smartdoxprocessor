@@ -18,7 +18,7 @@ import com.asamioffice.goldenport.io.UFile
 /**
  * @since   Jan. 18, 2012
  *  version Mar. 11, 2012
- * @version Sep.  8, 2012
+ * @version Sep. 22, 2012
  * @author  ASAMI, Tomoharu
  */
 trait UseSmartDoc extends Dox2DoxSmartDoxTransformerBase with GenerateResources {
@@ -67,7 +67,7 @@ trait UseSmartDoc extends Dox2DoxSmartDoxTransformerBase with GenerateResources 
           }
         }
       }
-      case Failure(e) => _transform_failure(e)
+      case Failure(e) => transform_failure(e)
     }
   }
 
@@ -106,6 +106,8 @@ trait UseSmartDoc extends Dox2DoxSmartDoxTransformerBase with GenerateResources 
       case (p: Program, cs) => (SmartDoc("program", nil, nil), Stream(Text(program_text(p)).leaf))
       case (c: Console, cs) => (SmartDoc("console", nil, nil), Stream(Text(c.contents).leaf))
       case (f: Figure, cs) => (SmartDoc("figure", figureattrs(f), nil), Stream.empty)
+      case (t: Table, cs) => (SmartDoc("table", nil, nil), cs.filter(!_.isInstanceOf[Caption]))
+      case (t: Caption, cs) => (SmartDoc("attribute", List(attribute_entry("name", List(Text("title")))), nil), cs)
     } // ensuring { x => println("_transform = " + x.drawTree); true}
   }
 
@@ -157,7 +159,7 @@ trait UseSmartDoc extends Dox2DoxSmartDoxTransformerBase with GenerateResources 
     }
   }
 
-  private def _transform_failure(e: NonEmptyList[String]) {
+  protected final def transform_failure(e: NonEmptyList[String]) {
     throw new IllegalArgumentException(e.list.mkString)
   }
 }
