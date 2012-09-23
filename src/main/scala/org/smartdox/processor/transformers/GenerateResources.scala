@@ -10,7 +10,7 @@ import org.smartdox._
 import org.goldenport.entity.content.BinaryContent
 import org.goldenport.Strings
 import java.util.concurrent.CopyOnWriteArrayList
-import java.io.File
+import java.io.{File, IOException}
 import com.asamioffice.goldenport.io.UFile
 import Dox.TreeDoxVW
 import Dox.TreeDoxW
@@ -19,8 +19,11 @@ import java.io.InputStream
 import com.asamioffice.goldenport.io.UIO
 
 /**
+ * TODO explicitly error handling for gentle message
+ * 
  * @since   Jan. 20, 2012
- * @version Jan. 30, 2012
+ *  version Jan. 30, 2012
+ * @version Sep. 22, 2012
  * @author  ASAMI, Tomoharu
  */
 trait GenerateResources extends SmartDoxTransformerBase {
@@ -70,19 +73,31 @@ trait GenerateResources extends SmartDoxTransformerBase {
   }
 
   private def _generate_graphviz_png(text: String, outname: String): Either[Exception, BinaryContent] = {
-    val layout = "dot"
-    // val layout = "neato"
-    _execute_command_stdio("dot -Tpng -K%s -q".format(layout), text,
-        outname, Strings.mimetype.image_png)
+    try {
+      val layout = "dot"
+      // val layout = "neato"
+      _execute_command_stdio("dot -Tpng -K%s -q".format(layout), text,
+                             outname, Strings.mimetype.image_png)
+    } catch {
+      case e => throw new IOException("""graphvizのdotコマンドが動作しませんでした。
+graphvizについてはhttp://www.graphviz.org/を参照してください。
+[詳細エラー: %s]""".format(e.getMessage))
+    }
   }
 
   private def _generate_ditaa_png(text: String, outname: String): Either[Exception, BinaryContent] = {
-    val r = _execute_command_tmpfiles("ditaa", text,
-        outname, Strings.mimetype.image_png)
-    if (r.isRight) r
-    else {
-      _execute_command_tmpfiles("java -jar /opt/local/share/java/ditaa0_9.jar", text,
-          outname, Strings.mimetype.image_png)
+    try {
+      val r = _execute_command_tmpfiles("ditaa", text,
+                                        outname, Strings.mimetype.image_png)
+      if (r.isRight) r
+      else {
+        _execute_command_tmpfiles("java -jar /opt/local/share/java/ditaa0_9.jar", text,
+                                  outname, Strings.mimetype.image_png)
+      }
+    } catch {
+      case e => throw new IOException("""ditaaコマンドが動作しませんでした。
+dittaについてはhttp://ditaa.sourceforge.net/を参照してください。
+[詳細エラー: %s]""".format(e.getMessage))
     }
   }
 
