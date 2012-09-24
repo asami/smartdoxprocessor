@@ -7,6 +7,7 @@ import Scalaz._
 import scalaz.concurrent.Promise
 import org.goldenport.Z._
 import org.smartdox._
+import org.goldenport.util.MimeType
 import org.goldenport.entity.content.BinaryContent
 import org.goldenport.Strings
 import java.util.concurrent.CopyOnWriteArrayList
@@ -116,7 +117,8 @@ dittaについてはhttp://ditaa.sourceforge.net/を参照してください。
             // "container.message" -> "trace"
       sm.executeAsAnyRef("diagram", List(ds), props) match {
         case Some(b: BinaryContent) => {
-          BinaryContent(b.getBinary(), entity_context, outname, b.mimeType | Strings.mimetype.image_png).right
+          val m = b.mimeType | MimeType.image_png
+          BinaryContent.createBinary(b.getBinary(), entity_context, outname, m).right
         }
         case Some(c) => (new IllegalArgumentException(c.toString)).left // XXX toString too big case
         case None => (new IllegalArgumentException("empty result")).left
@@ -136,7 +138,7 @@ dittaについてはhttp://ditaa.sourceforge.net/を参照してください。
       out.flush
       out.close
       cmd.waitFor()
-      BinaryContent(in, entity_context, outname, mimetype).right
+      BinaryContent.createInputStream(in, entity_context, outname, MimeType(mimetype)).right
     } catch {
       case e: Exception => e.left
     } finally {
@@ -162,7 +164,7 @@ dittaについてはhttp://ditaa.sourceforge.net/を参照してください。
       UIO.stream2Bytes(in) // skip
       cmd.waitFor()
       val outcome = UIO.file2Bytes(outfile)
-      BinaryContent(outcome, entity_context, outname, mimetype).right
+      BinaryContent.createBinary(outcome, entity_context, outname, MimeType(mimetype)).right
     } catch {
       case e: Exception => e.left
     } finally {
