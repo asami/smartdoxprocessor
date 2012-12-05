@@ -49,7 +49,7 @@ class PureSmartDoxEntity(aIn: GDataSource, aOut: GDataSource, aContext: GEntityC
     name = aDataSource.simpleName
     val in = aDataSource.openReader()
     _dox = PureParser.parse(in)
-    println("PureSmartDoxEntity#load_datasource = " + _dox)
+//    println("PureSmartDoxEntity#load_datasource = " + _dox)
   }
 
   override protected def write_Content(anOut: OutputStream): Unit = {
