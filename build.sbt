@@ -14,15 +14,15 @@ scalacOptions += "-deprecation"
 
 scalacOptions += "-unchecked"
 
-// resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
+resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
 
 resolvers += "Asami Maven Repository" at "http://www.asamioffice.com/maven"
 
 libraryDependencies += "org.scalaz" %% "scalaz-core" % "6.0.4"
 
-libraryDependencies += "org.goldenport" %% "goldenport-scala-lib" % "0.1.3-SNAPSHOT"
+// libraryDependencies += "org.goldenport" %% "goldenport-scala-lib" % "0.1.3-SNAPSHOT"
 
-libraryDependencies += "org.goldenport" %% "goldenport" % "0.4.2-SNAPSHOT"
+libraryDependencies += "org.goldenport" %% "goldenport" % "0.4.8-SNAPSHOT"
 
 libraryDependencies += "org.goldenport" %% "goldenport-scalaz-lib" % "0.2.0"
 
@@ -30,7 +30,7 @@ libraryDependencies += "org.apache.poi" % "poi" % "3.8"
 
 libraryDependencies += "org.apache.poi" % "poi-ooxml" % "3.8"
 
-libraryDependencies += "org.smartdox" %% "smartdox" % "0.3.1-SNAPSHOT"
+libraryDependencies += "org.smartdox" %% "smartdox" % "0.3.2-SNAPSHOT"
 
 libraryDependencies += "org.xmlsmartdoc" % "smartdoc" % "2.0-beta2"
 
