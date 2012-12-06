@@ -1,5 +1,5 @@
 [app]
-  version: 0.3.0-RC
+  version: 0.3.0
   org: org.smartdox
   name: smartdoxprocessor
   class: org.smartdox.processor.SmartDocApp
@@ -7,6 +7,6 @@
   version: 2.9.2
 [repositories]
   local
-  sonatype-oss-releases
   maven-central
+  sonatype-releases: https://oss.sonatype.org/content/repositories/releases/
   asamioffice:http://www.asamioffice.com/maven
