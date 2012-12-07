@@ -19,10 +19,10 @@ import org.smartdox.Dox
  * @since   Jan.  1, 2012
  *  version Jan.  9, 2012
  *  version Aug.  5, 2012
- * @version Dec.  5, 2012
+ * @version Dec.  6, 2012
  * @author  ASAMI, Tomoharu
  */
-class OrgSmartDoxEntity(aIn: GDataSource, aOut: GDataSource, aContext: GEntityContext) extends GEntity(aIn, aOut, aContext) {
+class OrgSmartDoxEntity(aIn: GDataSource, aOut: GDataSource, aContext: GEntityContext) extends GEntity(aIn, aOut, aContext) with SmartDoxEntity {
   type DataSource_TYPE = GDataSource
 
   def dox: ValidationNEL[String, Dox] = _dox
