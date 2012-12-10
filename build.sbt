@@ -4,7 +4,7 @@ organization := "org.smartdox"
 
 name := "smartdoxprocessor"
 
-version := "0.3.0"
+version := "0.3.0a"
 
 // scalaVersion := "2.9.2"
 
